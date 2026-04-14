@@ -2,7 +2,7 @@
 #include "bot.h"
 #include "logic.h"
 
-void botAction(char pBoard[BOARD_SIZE][BOARD_SIZE], Bot& bot) {
+bool botAction(char pBoard[BOARD_SIZE][BOARD_SIZE], Bot& bot) {
     int x, y;
 
     if (bot.state == SEARCH)
@@ -29,9 +29,13 @@ void botAction(char pBoard[BOARD_SIZE][BOARD_SIZE], Bot& bot) {
                 bot.lastY = y;
                 bot.dir = 0;
             }
+            return true;
         }
         else
+        {
             pBoard[x][y] = MISS;
+            return false;
+        }
     }
     else if (bot.state == HUNT)
     {
@@ -58,11 +62,13 @@ void botAction(char pBoard[BOARD_SIZE][BOARD_SIZE], Bot& bot) {
                         bot.state = SEARCH;
                         markAroundSunk(pBoard, targetX, targetY);
                     }
+                    return true;
                 }
                 else
                 {
                     pBoard[targetX][targetY] = MISS;
                     bot.dir = (bot.dir + 1) % 4;
+                    return false;
                 }
                 madeShot = true;
             }
@@ -78,4 +84,6 @@ void botAction(char pBoard[BOARD_SIZE][BOARD_SIZE], Bot& bot) {
             }
         }
     }
+
+    return false;
 }
