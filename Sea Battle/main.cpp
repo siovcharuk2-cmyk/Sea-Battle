@@ -83,7 +83,7 @@ int main() {
             std::cout << "Введіть координати для пострілу (x y): ";
             std::cin >> x >> y;
 
-            if (!canShoot)
+            if (!canShoot(cBoard, x, y))
             {
                 std::cout << "Сюди не можна стріляти! Спробуйте ще раз." << std::endl;
                 Sleep(1000);
@@ -106,12 +106,26 @@ int main() {
         else
         {
             std::cout << "\n--- ХІД КОМП'ЮТЕРА ---\n";
-            Sleep(1000);
-            
-            botAction(pBoard, computerBrain);
-            
-            playerTurn = true;
-            if (checkWin(pBoard)) break;
+
+            bool botHit = true;
+            while (botHit)
+            {
+                Sleep(1000);
+
+                botHit = botAction(pBoard, computerBrain);
+                printBoard(pBoard, cBoard);
+
+                if (botHit)
+                {
+                    std::cout << "Бот влучив і стріляє знову!\n";
+                    if (checkWin(pBoard)) break;
+                }
+                else
+                {
+                    std::cout << "Бот промахнувся. Ваш хід!\n";
+                    playerTurn = true;
+                }
+            }
         }
     }
 
