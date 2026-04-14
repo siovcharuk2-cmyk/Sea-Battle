@@ -36,8 +36,6 @@ bool canPlaceShip(char board[BOARD_SIZE][BOARD_SIZE], int x, int y, int size, bo
 
 void placeShipsAuto(char board[BOARD_SIZE][BOARD_SIZE])
 {
-    std::srand(time(NULL));
-
     for (int i = 0; i < TOTAL_SHIPS; i++)
     {
         int currentSize = SHIP_TYPES[i];
@@ -80,7 +78,10 @@ bool processShot(char board[BOARD_SIZE][BOARD_SIZE], int x, int y)
     {
         board[x][y] = HIT;
         if (isSunk(board, x, y))
+        {
+            std::cout << "Ви збили корабель! Стріляєте знову." << std::endl;
             markAroundSunk(board, x, y);
+        }
         return true;
     }
     else if (board[x][y] == EMPTY)
