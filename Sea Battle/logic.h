@@ -9,4 +9,8 @@ bool canShoot(char board[BOARD_SIZE][BOARD_SIZE], int x, int y);
 
 bool processShot(char board[BOARD_SIZE][BOARD_SIZE], int x, int y);
 
+bool isSunk(char board[BOARD_SIZE][BOARD_SIZE], int x, int y);
+
+void markAroundSunk(char board[BOARD_SIZE][BOARD_SIZE], int x, int y);
+
 bool checkWin(char board[BOARD_SIZE][BOARD_SIZE]);
